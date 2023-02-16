@@ -1,0 +1,49 @@
+
+print("Test 1:")
+if "testfile.txt.a" in listfiles():
+  removefile("testfile.txt.a")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+myfile=ABopenfile("testfile.txt",True)  #Create an AB file
+print("Pass!")
+
+print("Test 2:")
+# I should get 'SE' when reading an empty file...
+print(myfile.readat(None,0))
+assert('SE' == myfile.readat(None,0))
+print("Pass!")
+
+print("Test 3:")
+# put some valid data in the file.
+myfile.writeat("Stest12345E",0)
+print("Pass!")
+
+print("Test 4:")
+# I should still get 'SE' because the file wasn't closed.
+assert('SE' == myfile.readat(None,0))
+print("Pass!")
+
+#Close the file
+myfile.close()
+
+
+
+print("Test 5:")
+if "testfile.txt.b" in listfiles():
+  removefile("testfile.txt.b")
+myfile=ABopenfile("testfile.txt",False)  #Create an AB file
+print("Pass!")
+
+print("Test 6:")
+# I should get 'SE' when reading an empty file...
+temp = myfile.readat(None,0)
+assert('S' == temp[0] and 'E' == temp[-1])
+print("Pass!")
+
+print("Test 7:")
+# I should be able to write to the end of an existing file
+myfile.writeat("STest Test TestE", 10)
+myfile.close()
+
+assert('S' == temp[0] and 'E' == temp[-1])
+print("Pass!")
